@@ -2,16 +2,12 @@
 
 DATE=$(date +%Y%m%d%H%M)
 FILE_NAME="${PG_DATABASE}-database-${DATE}.backup"
-POSTGRES_FOLDER="/var/lib/postgresql"
+POSTGRES_FOLDER_BACKUP="/var/lib/postgresql/data/backups"
+POSTGRES_HOSTNAME="postgresql"
 
+echo "${POSTGRES_HOSTNAME}:${PG_PORT}:${PG_DATABASE}:${PG_USER}:${PG_PASSWORD}" > ~/.pgpass && chmod 0600 ~/.pgpass
 
-if [ ! -d "${POSTGRES_FOLDER}" ]
-then
-   mkdir -p ${POSTGRES_FOLDER}
-fi
+test -d "${POSTGRES_FOLDER_BACKUP}" || mkdir "${POSTGRES_FOLDER_BACKUP}"
+{ [ $# -gt 0 ] && exec "$@"; } && exit $?
 
-echo postgres:${PG_PORT}:${PG_DATABASE}:${PG_USER}:${PG_PASSWORD} > ~/.pgpass && chmod 0600 ~/.pgpass
-
-cat ~/.pgpass
-
-pg_dump -h postgres -U "${PG_USER}" -Fc "${PG_DATABASE}" --no-owner > ${POSTGRES_FOLDER}/${FILE_NAME}
+pg_dump -h "${POSTGRES_HOSTNAME}" -U "${PG_USER}" -Fc "${PG_DATABASE}" --no-owner > "${POSTGRES_FOLDER_BACKUP}/${FILE_NAME}"

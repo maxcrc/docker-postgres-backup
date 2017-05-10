@@ -14,7 +14,7 @@ RUN apt-get update && \
 
 ADD entrypoint.sh /
 
-VOLUME ["/var/lib/postgres"]
+VOLUME ["/var/lib/postgresql/data/backups"]
 
 ENTRYPOINT ["/entrypoint.sh"]
 
