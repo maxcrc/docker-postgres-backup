@@ -8,7 +8,10 @@ RUN apt-get update && \
 	echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 	
 RUN apt-get update && \
-	apt-get install wget ca-certificates postgresql-client-${PG_VERSION} -y --no-install-recommends && \
+	apt-get install postgresql-client-${PG_VERSION} -y --no-install-recommends && \
+	apt-get purge wget ca-certificates lsb-release gnupg -y && \
+	apt-get clean && \
+	apt-get autoremove -y && \
 	rm -rf /var/lib/apt/lists/*
 
 
