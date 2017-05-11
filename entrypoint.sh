@@ -5,7 +5,6 @@ FILE_NAME="${PG_DATABASE}-database-${DATE}.backup"
 POSTGRES_FOLDER_BACKUP="/var/lib/postgresql/data/backups"
 POSTGRES_HOSTNAME="postgresql"
 
-echo "${POSTGRES_HOSTNAME}:${PG_PORT}:${PG_DATABASE}:${PG_USER}:${PG_PASSWORD}" > ~/.pgpass && chmod 0600 ~/.pgpass
 test -f ~/.pgpass || { echo "${POSTGRES_HOSTNAME}:${PG_PORT}:${PG_DATABASE}:${PG_USER}:${PG_PASSWORD}" > ~/.pgpass && chmod 0600 ~/.pgpass; }
 
 test -d "${POSTGRES_FOLDER_BACKUP}" || mkdir "${POSTGRES_FOLDER_BACKUP}"
