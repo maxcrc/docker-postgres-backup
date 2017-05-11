@@ -10,4 +10,5 @@ echo "${POSTGRES_HOSTNAME}:${PG_PORT}:${PG_DATABASE}:${PG_USER}:${PG_PASSWORD}" 
 test -d "${POSTGRES_FOLDER_BACKUP}" || mkdir "${POSTGRES_FOLDER_BACKUP}"
 { [ $# -gt 0 ] && exec "$@"; } && exit $?
 
+find "${POSTGRES_FOLDER_BACKUP}/" -name *.backup -mtime +${BACKUP_KEEP_DAYS} -exec rm {} \;
 pg_dump -h "${POSTGRES_HOSTNAME}" -U "${PG_USER}" -Fc "${PG_DATABASE}" --no-owner > "${POSTGRES_FOLDER_BACKUP}/${FILE_NAME}"

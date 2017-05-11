@@ -1,6 +1,6 @@
 FROM debian:stretch
 
-ENV PG_VERSION=9.5 PG_USER=USER PG_PASSWORD=PASSWORD PG_DATABASE=DATABASE PG_PORT=5432
+ENV PG_VERSION=9.5 PG_USER=USER PG_PASSWORD=PASSWORD PG_DATABASE=DATABASE PG_PORT=5432 BACKUP_KEEP_DAYS=30
 
 RUN apt-get update && \
 	apt-get install wget ca-certificates lsb-release gnupg -y --no-install-recommends && \
