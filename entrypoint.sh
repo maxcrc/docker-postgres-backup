@@ -16,11 +16,9 @@ echo "Operating on '${PG_HOSTNAME}:${PG_PORT}' and db: '${PG_DATABASE}' as user 
 echo "[$(date -Iseconds)] Running vacuumdb."
 vacuumdb -h "${PG_HOSTNAME}" -U "${PG_USER}" -d "${PG_DATABASE}"
 
-echo "REMOVE_OLD_BACKUPS = ${REMOVE_OLD_BACKUPS}"
-
 if [[ $REMOVE_OLD_BACKUPS == 1 ]]
 then
-	echo "REMOVE_OLD_BACKUPS = ${REMOVE_OLD_BACKUPS}"
+echo "[$(date -Iseconds)] Removing old backups."
 	/usr/bin/python3 /removeoldbackups.py -vv "${PG_BACKUP_FOLDER}"
 fi
 
