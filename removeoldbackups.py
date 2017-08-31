@@ -13,21 +13,21 @@ def shoulddeletefile(filepath):
     lastdayofmonth = monthrange(mtime.year, mtime.month)
     msgfmt = 'filepath: "{}", mtime: "{}", lastdayofmonth: "{}", todelete: {}'
     todelete = False
-    
+
     if mtime.day != 1 and mtime.day != lastdayofmonth[1] and (datetime.now() - mtime) > timedelta(days=7):
         todelete = True
 
     logging.debug(msgfmt.format(filepath, mtime, lastdayofmonth[1], todelete))
-        
+
     return todelete
 
 
-def removefiles(filestodelete, dryrun=False):    
+def removefiles(filestodelete, dryrun=False):
     for filepath in filestodelete:
         if not dryrun:
             remove(filepath)
 
-            
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Delete all files leaving only files created at the start/end of the month and which are not older than 7 days')
     parser.add_argument('path', nargs='?', help='path to delete files in', default=getcwd())
@@ -36,7 +36,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     loglevel = logging.CRITICAL
-    
+
     if args.verbosity == 1:
         loglevel = logging.INFO
     elif args.verbosity >= 2:
@@ -44,7 +44,7 @@ if __name__ == '__main__':
 
     if args.dryrun:
         loglevel = logging.DEBUG
-        
+
     logging.basicConfig(
         level=loglevel,
         format='%(message)s',
@@ -53,6 +53,7 @@ if __name__ == '__main__':
 
     if args.dryrun:
         logging.debug("Dry run won't delete anything")
-    
-    removefiles([ x for x in listdir(args.path) if path.isfile(x) and shoulddeletefile(x) ], args.dryrun)
-    
+
+    files = [ path.join(args.path, x) for x in listdir(args.path) ]
+    removefiles([ x for x in files if path.isfile(x) and shoulddeletefile(x) ], args.dryrun)
+
