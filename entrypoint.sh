@@ -2,7 +2,7 @@
 
 DATE=$(date +%Y%m%d%H%M)
 FILE_NAME="${PG_DATABASE}-database-${DATE}.backup"
-PG_BACKUP_FOLDER="/var/lib/backups"
+PG_BACKUP_FOLDER="/var/lib/postgresql/data/backups"
 
 set -e
 
@@ -22,5 +22,6 @@ echo "[$(date -Iseconds)] Removing old backups."
 	/usr/bin/python3 /removeoldbackups.py -vv "${PG_BACKUP_FOLDER}"
 fi
 
-echo -e "[$(date -Iseconds)] Running pg_dump."
+
+echo -e "[$(date -Iseconds)] Running pg_dump to ${PG_BACKUP_FOLDER}/${FILE_NAME}"
 pg_dump -h "${PG_HOSTNAME}" -U "${PG_USER}" -Fc "${PG_DATABASE}" --no-owner > "${PG_BACKUP_FOLDER}/${FILE_NAME}"

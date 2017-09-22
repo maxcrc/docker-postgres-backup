@@ -1,6 +1,6 @@
 FROM debian:stretch
 
-ENV PG_VERSION=9.5 PG_USER=USER PG_PASSWORD=PASSWORD PG_DATABASE=DATABASE PG_PORT=5432 REMOVE_OLD_BACKUPS=0 PG_HOSTNAME="postgresql"
+ENV PG_VERSION=9.6 PG_USER=USER PG_PASSWORD=PASSWORD PG_DATABASE=DATABASE PG_PORT=5432 REMOVE_OLD_BACKUPS=0 PG_HOSTNAME="postgresql"
 
 RUN apt-get update && \
 	apt-get install wget ca-certificates lsb-release gnupg -y --no-install-recommends && \
@@ -16,7 +16,7 @@ RUN apt-get purge wget ca-certificates lsb-release gnupg -y && \
 
 ADD entrypoint.sh removeoldbackups.py /
 
-VOLUME ["/var/lib/backups"]
+VOLUME ["/var/lib/postgresql/data/backups"]
 
 ENTRYPOINT ["/entrypoint.sh"]
 
