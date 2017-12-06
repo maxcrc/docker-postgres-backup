@@ -12,6 +12,18 @@ log = logging.getLogger(LOGGER_NAME)
 logging.getLogger("paramiko").setLevel(logging.WARNING)
 
 
+def setup_logging():
+    logging.basicConfig(
+        filename=LOG_FILE,
+        level=logging.DEBUG,
+        format='[%(asctime)s]: %(message)s',
+        datefmt='%Y-%m-%d %H:%M:%S'
+    )
+
+    handler = logging.StreamHandler()
+    log.addHandler(handler)
+
+
 def clean(backup_folder):
     files = [path.join(backup_folder, f) for f in listdir(backup_folder) if
              path.isfile(path.join(backup_folder, f)) and f.lower().endswith('.backup')]

@@ -3,6 +3,7 @@ from os import path
 from utils import send_mail
 from uploaders import UploaderFuse, UploaderScp, UploaderSshFs
 from backuper import Backuper
+from utils import LOG_FILE, log, setup_logging
 
 def worker(backuper, uploader=None, cleaner=None, mail_recipients=None):
     lines_start = 0
@@ -30,17 +31,8 @@ def worker(backuper, uploader=None, cleaner=None, mail_recipients=None):
 
 
 def main():
-    logging.basicConfig(
-        filename=LOG_FILE,
-        level=logging.DEBUG,
-        format='[%(asctime)s]: %(message)s',
-        datefmt='%Y-%m-%d %H:%M:%S'
-    )
-
-    _log = logging.getLogger(LOGGER_NAME)
-    handler = logging.StreamHandler()
-    _log.addHandler(handler)
-
+    setup_logging();
+    
     worker(
         Backuper('dortmund', '/var/lib/postgresql/data/backup'),
         UploaderScp('/home/odoo/backups', 'odoo', 'superfly.maxcrc.de', 6666, "dortmund.dump")

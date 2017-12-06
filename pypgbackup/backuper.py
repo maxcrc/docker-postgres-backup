@@ -1,8 +1,8 @@
 #!/usr/bin/env python2
-import logging
 from datetime import datetime
 import subprocess
 from os import path, makedirs
+from utils import log
 
 class Backuper():
     def __init__(self, db, backup_path, user=None, host=None):
@@ -26,13 +26,13 @@ class Backuper():
             vacuumdb_args.extend(["-U", self.user])
             pg_dump_args.extend(["-U", self.user])
 
-        _log.info("Running vacuum on the database.")
+        log.info("Running vacuum on the database.")
         subprocess.call(vacuumdb_args)
 
-        _log.info("Running pg_dump on the database.")
+        log.info("Running pg_dump on the database.")
         subprocess.call(pg_dump_args)
 
-        _log.info("Backup and Vacuum complete for database '{}'".format(self.db))
+        log.info("Backup and Vacuum complete for database '{}'".format(self.db))
 
         return backup_file
 
@@ -50,7 +50,7 @@ class Backuper():
             backup_path = self.do_backup_impl()
 
         except Exception as e:
-            _log.error('Exception occured. Exception: {}'.format(e.message))
+            log.error('Exception occured. Exception: {}'.format(e.message))
         finally:
             message = ["Subject:Odoo db backup finished\n\n", ]
 
