@@ -8,28 +8,29 @@ import argparse
 import sys
 
 
-def shoulddeletefile(filepath):
+def shoulddeletefile(filepath, expr):
+    now = datetime.now()
     mtime = datetime.fromtimestamp(path.getmtime(filepath))
-    lastdayofmonth = monthrange(mtime.year, mtime.month)
-    msgfmt = 'filepath: "{}", mtime: "{}", lastdayofmonth: "{}", todelete: {}'
-    todelete = False
+    monthend = monthrange(mtime.year, mtime.month)[1]
 
-    if mtime.day != 1 and mtime.day != lastdayofmonth[1] and (datetime.now() - mtime) > timedelta(days=7):
-        todelete = True
+    todelete = eval(expr, {'__builtins__': {}, 'datetime': datetime, 'timedelta': timedelta }, {'now': now, 'mtime': mtime, 'monthend': monthend})
 
-    logging.debug(msgfmt.format(filepath, mtime, lastdayofmonth[1], todelete))
+    logging.debug('expr: "{}" filepath: "{}", mtime: "{}", monthend: "{}", todelete: {}.'.format(expr, filepath, mtime, monthend, todelete))
 
     return todelete
-
 
 def removefiles(filestodelete, dryrun=False):
     for filepath in filestodelete:
         if not dryrun:
             remove(filepath)
 
+def run(expr, filePath, dryrun):
+    files = [ path.join(filePath, x) for x in listdir(filePath) ]
+    removefiles([ x for x in files if path.isfile(x) and shoulddeletefile(x, expr) ], dryrun)
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Delete all files leaving only files created at the start/end of the month and which are not older than 7 days')
+    parser = argparse.ArgumentParser(description='Delete all files leaving based on the expression')
+    parser.add_argument('expr', help='python expression if it evaluates to True file will be deleted', default='False', required=True)
     parser.add_argument('path', nargs='?', help='path to delete files in', default=getcwd())
     parser.add_argument('-v', '--verbosity', help='output debugging information', action='count', default=False)
     parser.add_argument('-d', '--dryrun', help='do not delete anything just output debugging information', action='store_true', default=False)
@@ -54,6 +55,4 @@ if __name__ == '__main__':
     if args.dryrun:
         logging.debug("Dry run won't delete anything")
 
-    files = [ path.join(args.path, x) for x in listdir(args.path) ]
-    removefiles([ x for x in files if path.isfile(x) and shoulddeletefile(x) ], args.dryrun)
-
+    run(args)

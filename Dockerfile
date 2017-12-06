@@ -14,7 +14,7 @@ RUN apt-get purge wget ca-certificates lsb-release gnupg -y && \
 	apt-get autoremove -y && \
 	rm -rf /var/lib/apt/lists/*
 
-ADD entrypoint.sh removeoldbackups.py /
+ADD entrypoint.sh removeoldbackups/removeoldbackups.py /
 
 VOLUME ["/var/lib/postgresql/data/backups"]
 
