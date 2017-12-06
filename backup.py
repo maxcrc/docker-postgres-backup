@@ -1,16 +1,15 @@
 #!/usr/bin/env python2
-from os import path, listdir, remove, makedirs
 import logging
-import subprocess
-import shutil
-from datetime import datetime
-from dateutil.relativedelta import relativedelta
 import calendar
+import shutil
 import smtplib
-import paramiko
+from datetime import datetime
+import subprocess
 from subprocess import Popen, PIPE
-import json
-from os import path
+from os import path, listdir, remove, makedirs
+
+import paramiko
+from dateutil.relativedelta import relativedelta
 
 LOGGER_NAME = "Backup"
 LOG_FILE = "backup.log"
@@ -18,74 +17,149 @@ _log = logging.getLogger(LOGGER_NAME)
 
 logging.getLogger("paramiko").setLevel(logging.WARNING)
 
+class UploaderFuse:
+    def __init__(self, src, dest):
+        self._src = src
+        self._dest = dest
+        super(UploaderFuse, self).__init__(src, dest)
+
+    def upload(self):
+        _log.info("Mounting the {} folder".format(self._dest))
+        try:
+            subprocess.call(['fusermount', '-u', '-z', self._dest])
+            subprocess.call(['mount', self._dest])
+            shutil.copy2(self._src, self._dest)
+            subprocess.call(['fusermount', '-u', self._dest])
+        except Exception as e:
+            _log.warning('Unable to copy file to remote location. Exception: {}'.format(e))
+            raise
+        finally:
+            subprocess.call(['fusermount', '-u', '-z', self._dest])
+
+
+class UploaderScp(UploaderFuse):
+    def __init__(self, src, dest, username, hostname, port=22, dest_file_name=None):
+        super(UploaderScp,self).__init__(src, dest)
+        self._username = username
+        self._hostname = hostname
+        self._port = port
+        self._dest_file_name = dest_file_name
+        self._client = None
+
+    def _connect(self):
+        key_filename = path.expanduser(path.join('~', '.ssh', 'id_rsa'))
+
+        self._client = paramiko.SSHClient()
+        self._client.load_system_host_keys()
+        self._client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        self._client.connect(self._hostname, port=self._port, username=self._username, key_filename=key_filename)
+
+        _log.info('Connecting to \'{}:{}\'. As user: \'{}\'. Using key from \'{}\''.format(self._hostname, self._port, self._username,
+                                                                                           key_filename))
+
+    def _disconnect(self):
+        if self._client:
+            self._client.close()
+
+    def upload(self):
+        try:
+            _log.info('Uploading backup on {}:{}'.format(self._hostname, self._port))
+            if self._dest_file_name:
+                dest = path.join(path.dirname(self._dest), self._dest_file_name)
+
+            self._client.open_sftp().put(self._src, dest)
+        except Exception as e:
+            _log.error('Upload failed. Exception: {}'.format(e))
+        finally:
+            self._disconnect();
+
+class UploaderSshFs(UploaderFuse):
+    def __init__(self, src, dest, mount_point=None):
+        super(UploaderSshFs,self).__init__(src, dest)
+        self._mount_point = mount_point if mount_point else path.expanduser('~/backup-mnt-point')
+
+    def upload(self):
+        _log.info("Mounting the {} folder".format(self._dest))
+        try:
+            name_host, file_path = self._dest.split(':')
+            filename = path.basename(self._src)
+            dest = ':'.join([name_host, file_path])
+
+            subprocess.call(['fusermount', '-u', '-z', self._mount_point])
+
+            cmd = 'sshfs {} {} -o IdentityFile={}'.format(dest, self._mount_point, path.expanduser('~/.ssh/id_rsa'))
+            c, _, __ = run_process(cmd.split(' '))
+
+            if c != 0:
+                raise RuntimeError('Can\'t mount remote FS')
+
+            shutil.copy2(self._src, path.join(self._mount_point, filename))
+        except Exception as e:
+            _log.warning('Unable to copy file to remote location. Exception: {}'.format(e))
+            raise
+        finally:
+            run_process(['fusermount', '-u', '-z', self._mount_point])
+
+
+class Backuper():
+    def __init__(self, db, backup_path, user=None, host=None):
+        self.db = db
+        self.backup_path = backup_path
+        self.user = user
+        self.host = host
+
+    def do_backup_impl(self):
+        timeslot = datetime.now().strftime('%Y%m%d%H%M')
+        backup_file = path.join(self.backup_path, "{}-database-{}.backup".format(self.db, timeslot))
+
+        vacuumdb_args = ['/usr/bin/vacuumdb', '-d', self.db]
+        pg_dump_args = ['/usr/bin/pg_dump', '-Fc', '-b', self.db, '-f', '--no-owner', backup_file]
+
+        if self.host:
+            vacuumdb_args.extend(["-h", self.host])
+            pg_dump_args.extend(["-h", self.host])
+
+        if self.user:
+            vacuumdb_args.extend(["-U", self.user])
+            pg_dump_args.extend(["-U", self.user])
+
+        _log.info("Running vacuum on the database.")
+        subprocess.call(vacuumdb_args)
+
+        _log.info("Running pg_dump on the database.")
+        subprocess.call(pg_dump_args)
+
+        _log.info("Backup and Vacuum complete for database '{}'".format(self.db))
+
+        return backup_file
+
+    def backup(self):
+        if not path.exists(self.backup_path):
+            print("Base folder {} doesn't exists. Creating".format(path.dirname(self.backup_path)))
+            try:
+                makedirs(self.backup_path)
+            except OSError as exc:
+                print('Can\'t create {}. Exception: {}'.format(self.backup_path, exc))
+                exit(1)
+
+        message = str()
+        try:
+            backup_path = self.do_backup_impl()
+
+        except Exception as e:
+            _log.error('Exception occured. Exception: {}'.format(e.message))
+        finally:
+            message = ["Subject:Odoo db backup finished\n\n", ]
+
+        return backup_path
+
+
 def run_process(args):
     _log.debug('Running command: \'{}\''.format(' '.join(args)))
     process = Popen(args, stdout=PIPE)
     (output, err) = process.communicate()
     return process.wait(), output, err
 
-
-def upload_backup_scp(src, dest, username, hostname, port=22, dest_file_name=None):
-    ssh_client = None
-    try:
-        ssh_client = paramiko.SSHClient()
-        ssh_client.load_system_host_keys()
-        key_filename = path.expanduser(path.join('~', '.ssh', 'id_rsa'))
-        ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        _log.info('Connecting to \'{}:{}\'. As user: \'{}\'. Using key from \'{}\''.format(hostname, port, username,
-                                                                                           key_filename))
-        ssh_client.connect(hostname, port=port, username=username, key_filename=key_filename)
-
-        _log.info('Uploading backup on {}:{}'.format(hostname, port))
-
-        if dest_file_name:
-            dest = path.join(path.dirname(dest), dest_file_name)
-
-        ssh_client.open_sftp().put(src, dest)
-    except Exception as e:
-        _log.error('Upload failed. Exception: {}'.format(e))
-        return False
-    else:
-        return True
-    finally:
-        if ssh_client:
-            ssh_client.close()
-
-def upload_backup_sshfs(src, dest, mount_point=path.expanduser('~/backup-mnt-point')):
-    _log.info("Mounting the {} folder".format(dest))
-    try:
-        name_host, file_path = dest.split(':')
-        filename = path.basename(src)
-        dest = ':'.join([name_host, file_path])
-
-        subprocess.call(['fusermount', '-u', '-z', mount_point])
-
-        cmd = 'sshfs {} {} -o IdentityFile={}'.format(dest, mount_point, path.expanduser('~/.ssh/id_rsa'))
-        c, _, __ = run_process(cmd.split(' '))
-
-        if c != 0:
-            raise RuntimeError('Can\'t mount remote FS')
-
-        shutil.copy2(src, path.join(mount_point, filename))
-    except Exception as e:
-        _log.warning('Unable to copy file to remote location. Exception: {}'.format(e))
-        raise
-    finally:
-        run_process(['fusermount', '-u', '-z', mount_point])
-
-
-def upload_backup_fuse(src, dest):
-    _log.info("Mounting the {} folder".format(dest))
-    try:
-        subprocess.call(['fusermount', '-u', '-z', dest])
-        subprocess.call(['mount', dest])
-        shutil.copy2(src, dest)
-        subprocess.call(['fusermount', '-u', dest])
-    except Exception as e:
-        _log.warning('Unable to copy file to remote location. Exception: {}'.format(e))
-        raise
-    finally:
-        subprocess.call(['fusermount', '-u', '-z', dest])
 
 
 def clean(backup_folder):
@@ -104,100 +178,41 @@ def clean(backup_folder):
     map(remove, filter(_delete_file, files))
 
 
-def do_backup_simple(backup_folder, db, host=None, user=None):
-    timeslot = datetime.now().strftime('%Y%m%d%H%M')
-    backup_file = path.join(backup_folder, "{}-database-{}.backup".format(db_name, timeslot))
-
-
-    def vacuumdb():
-        _log.info("Running vacuum on the database.")
-        
-        args = ['/usr/bin/vacuumdb', '-d', db]
-
-        if host:
-            args.extend(["-h", host])
-
-        if user:
-            args.extend(["-U", user])        
-        
-        subprocess.call(args)
-
-    def backup():
-        _log.info("Running pg_dump on the database.")
-        args = ['/usr/bin/pg_dump', '-Fc', '-b', db, '-f', backup_file]
-
-        if host:
-            args.extend(["-h", host])
-
-        if user:
-            args.extend(["-U", user])
-
-        subprocess.call(args)
-
-    vacuumdb()
-    backup()
-        
-    _log.info("Backup and Vacuum complete for database '{}'".format(db_name))
-
-    return backup_file
-
 def send_mail(mail_recepients, message):
     server = smtplib.SMTP('smtp.gmail.com:587', timeout=60)
     server.ehlo()
     server.starttls()
     server.login('pp.foss.pp@gmail.com', '123qwerty123')
 
-    for r in mail_recepients:
-        server.sendmail('pp.foss.pp@gmail.com', r, ''.join(message))
+    for recipient in mail_recepients:
+        server.sendmail('pp.foss.pp@gmail.com', recipient, ''.join(message))
 
     server.quit()
 
-def do_backup(db_names, backup_folder, backuper, uploader=None, mail_recipients=None, do_clean=False):
-    databases = db_names
-    if isinstance(databases, str):
-        databases = [db_names]
-
-    if not path.exists(backup_folder):
-        print("Base folder {} doesn't exists. Creating".format(path.dirname(backup_folder)))
-        try:
-            makedirs(backup_folder)
-        except OSError as e:
-            print('Can\'t create {}. Exception: {}'.format(backup_folder, e))
-            exit(1)
-
+def worker(backuper, uploader=None, cleaner=None, mail_recipients=None):
     lines_start = 0
     message = ""
     if mail_recipients:
-        with open(LOG_FILE) as f:
-            lines_start = sum(1 for line in f)
+        with open(LOG_FILE) as logfile:
+            lines_start = sum(1 for line in logfile)
 
-    for db_name in databases:
-        try:
-            backup_func = backuper[0]
-            backup_args = [backup_folder, db_name]
-            backup_args.extend(backuper[1:])
-            backup_path = backup_func(*backup_args)
+    result_path = backuper.backup()
 
-            if uploader:
-                uploader_func = uploader[0]
-                dest_path = path.join(uploader[1], path.basename(backup_path))
-                uploader_args = [backup_path, dest_path]
-                uploader_args.extend(uploader[2:])
-                uploader_func(*uploader_args)
+    if uploader:
+        uploader.upload(result_path)
 
-            if do_clean:
-                clean(backup_folder)
+    if cleaner:
+        cleaner.clean(path.dirname(result_path))
 
-        except Exception as e:
-            _log.error('Exception occured. Exception: {}'.format(e.message))
-        finally:
-            message = ["Subject:Odoo db backup finished\n\n", ]
 
-    if mail_recipients:
-        with open(LOG_FILE) as f:
-            lines = [l for l in f]
-            message += lines[lines_start:]
-            send_mail(mail_recipients, message)
+    if not mail_recipients:
+        return
+
+    with open(LOG_FILE) as log_file:
+        lines = [l for l in log_file]
+        message += lines[lines_start:]
+        send_mail(mail_recipients, message)
+
 
 def main():
     logging.basicConfig(
@@ -211,16 +226,14 @@ def main():
     handler = logging.StreamHandler()
     _log.addHandler(handler)
 
-    do_backup('dortmund',
-             '/var/lib/postgresql/data/backup',
-             (do_backup_docker,),
-             (upload_backup_scp, '/home/odoo/backups', 'odoo', 'superfly.maxcrc.de', 6666, "dortmund.dump"),
+    worker(
+        Backuper('dortmund', '/var/lib/postgresql/data/backup'),
+        UploaderScp('/home/odoo/backups', 'odoo', 'superfly.maxcrc.de', 6666, "dortmund.dump")
     )
 
-    do_backup('duisburg',
-             '/var/lib/postgresql/data/backup',
-             (do_backup_docker,),
-             (upload_backup_scp, '/home/odoo/backups', 'odoo', 'superfly.maxcrc.de', 6666, "duisburg.dump"),
+    worker(
+        Backuper('duisburg','/var/lib/postgresql/data/backup'),
+        UploaderScp('/home/odoo/backups', 'odoo', 'superfly.maxcrc.de', 6666, "duisburg.dump")
     )
 
 
