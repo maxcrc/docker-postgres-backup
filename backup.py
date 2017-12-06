@@ -104,66 +104,40 @@ def clean(backup_folder):
     map(remove, filter(_delete_file, files))
 
 
-def do_backup_simple(backup_folder, db_name):
+def do_backup_simple(backup_folder, db, host=None, user=None):
     timeslot = datetime.now().strftime('%Y%m%d%H%M')
     backup_file = path.join(backup_folder, "{}-database-{}.backup".format(db_name, timeslot))
 
-    _log.info("Running vacuum on the database.")
-    subprocess.call(['/usr/bin/vacuumdb', db_name])
-    _log.info("Running pg_dump on the database.")
-    subprocess.call(['/usr/bin/pg_dump', '-Fc', '-b', db_name, '-f', backup_file])
+
+    def vacuumdb():
+        _log.info("Running vacuum on the database.")
+        
+        args = ['/usr/bin/vacuumdb', '-d', db]
+
+        if host:
+            args.extend(["-h", host])
+
+        if user:
+            args.extend(["-U", user])        
+        
+        subprocess.call(args)
+
+    def backup():
+        _log.info("Running pg_dump on the database.")
+        args = ['/usr/bin/pg_dump', '-Fc', '-b', db, '-f', backup_file]
+
+        if host:
+            args.extend(["-h", host])
+
+        if user:
+            args.extend(["-U", user])
+
+        subprocess.call(args)
+
+    vacuumdb()
+    backup()
+        
     _log.info("Backup and Vacuum complete for database '{}'".format(db_name))
-
-    return backup_file
-
-def do_backup_docker(backup_folder, db_name, container='postgresql', db_username='postgres'):
-    def get_container_folder():
-        code, s_out, s_err = run_process(["docker", "inspect", '-f', '{{ json .Mounts }}', container])
-        if code != 0:
-            raise RuntimeError('Can\'t get mount source')
-
-        mounts = json.loads(s_out)
-        for mount in mounts:
-            is_subpath = path.normpath(backup_folder).startswith(path.normpath(mount.get('Source')))
-            subpath = path.relpath(backup_folder, mount.get('Source'))
-
-            if is_subpath:
-                _log.info("Backup and Vacuum complete for database '{}'".format(db_name))
-                return path.join(mount.get('Destination'), subpath or '')
-
-        return ''
-
-    timeslot = datetime.now().strftime('%Y%m%d%H%M')
-    file_name = "{}-database-{}.backup".format(db_name, timeslot)
-
-    _log.info("Running vacuum on the database.")
-
-    code, s_out, s_error =  run_process(['docker', 'exec', '-t', '-u', 'postgres', container, '/usr/bin/vacuumdb', db_name])
-    if code != 0:
-        raise RuntimeError('Can\'t vacuum the database.\nstdout:\n {}\nstderr: {}\n'.format(s_out, s_error))
-
-
-    _log.info("Running pg_dump on the database.")
-
-    container_folder = get_container_folder()
-
-    if not container_folder:
-        raise RuntimeError("Cannot find container directory to put the backup in.")
-
-    args = ['docker', 'exec', '-t', container, 'pg_dump', '--no-owner', '-Fc', '-f', path.join(container_folder, file_name), '-b', db_name]
-
-    if db_username:
-        args.append('--username=' + db_username)
-
-
-    code, s_out, s_error =  run_process(args)
-    if code != 0:
-        raise RuntimeError('Can\'t vacuum the database.\nstdout:\n {}\nstderr: {}\n'.format(s_out))
-
-    backup_file = path.join(backup_folder, file_name)
-
-    if not path.exists(backup_file):
-        raise RuntimeError('Failed to create the backup. File {} does\'t exist'.format(backup_file))
 
     return backup_file
 
