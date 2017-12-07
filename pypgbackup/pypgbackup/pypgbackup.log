@@ -1,0 +1,205 @@
+[2017-12-07 05:30:44]: Running vacuum on the database.
+[2017-12-07 05:30:44]: Running pg_dump on the database.
+[2017-12-07 05:30:44]: Backup and Vacuum complete for database 'chlen'
+[2017-12-07 05:30:44]: Mounting the 192.168.69.5 folder
+[2017-12-07 05:30:44]: Unable to copy file to remote location. Exception: not enough values to unpack (expected 2, got 1)
+[2017-12-07 05:30:44]: Running command: 'fusermount -u -z /home/draik/backup-mnt-point'
+[2017-12-07 05:32:27]: Running vacuum on the database.
+[2017-12-07 05:32:27]: Running pg_dump on the database.
+[2017-12-07 05:32:27]: Backup and Vacuum complete for database 'chlen'
+[2017-12-07 05:32:27]: Mounting the 192.168.69.5 folder
+[2017-12-07 05:32:27]: Unable to copy file to remote location. Exception: not enough values to unpack (expected 2, got 1)
+[2017-12-07 05:32:27]: Running command: 'fusermount -u -z /home/draik/backup-mnt-point'
+[2017-12-07 05:33:05]: Running vacuum on the database.
+[2017-12-07 05:33:05]: Running pg_dump on the database.
+[2017-12-07 05:33:05]: Backup and Vacuum complete for database 'chlen'
+[2017-12-07 05:33:05]: Mounting the 192.168.69.5 folder
+[2017-12-07 05:33:05]: Unable to copy file to remote location. Exception: not enough values to unpack (expected 2, got 1)
+[2017-12-07 05:33:05]: Running command: 'fusermount -u -z /home/draik/backup-mnt-point'
+[2017-12-07 05:34:01]: Running vacuum on the database.
+[2017-12-07 05:34:01]: Running pg_dump on the database.
+[2017-12-07 05:34:01]: Backup and Vacuum complete for database 'chlen'
+[2017-12-07 05:34:01]: Mounting the 192.168.69.5 folder
+[2017-12-07 05:34:01]: Unable to copy file to remote location. Exception: not enough values to unpack (expected 2, got 1)
+[2017-12-07 05:34:01]: Running command: 'fusermount -u -z /home/draik/backup-mnt-point'
+[2017-12-07 05:34:30]: Running vacuum on the database.
+[2017-12-07 05:34:30]: Running pg_dump on the database.
+[2017-12-07 05:34:30]: Backup and Vacuum complete for database 'chlen'
+[2017-12-07 05:34:30]: Mounting the 192.168.69.5 folder
+[2017-12-07 05:34:30]: Unable to copy file to remote location. Exception: not enough values to unpack (expected 2, got 1)
+[2017-12-07 05:34:30]: Running command: 'fusermount -u -z /home/draik/backup-mnt-point'
+[2017-12-07 05:44:42]: Running vacuum on the database.
+[2017-12-07 05:44:42]: Running pg_dump on the database.
+[2017-12-07 05:44:42]: Backup and Vacuum complete for database 'chlen'
+[2017-12-07 05:44:42]: Mounting the 192.168.69.5 folder
+[2017-12-07 05:44:42]: Unable to copy file to remote location. Exception: not enough values to unpack (expected 2, got 1)
+[2017-12-07 05:44:42]: Running command: 'fusermount -u -z /home/draik/backup-mnt-point'
+[2017-12-07 05:46:52]: Running vacuum on the database.
+[2017-12-07 05:46:52]: Running pg_dump on the database.
+[2017-12-07 05:46:52]: Mounting the 192.168.69.5 folder
+[2017-12-07 05:46:52]: Unable to copy file to remote location. Exception: not enough values to unpack (expected 2, got 1)
+[2017-12-07 05:46:52]: Running command: 'fusermount -u -z /home/draik/backup-mnt-point'
+[2017-12-07 05:47:29]: Running vacuum on the database.
+[2017-12-07 05:47:29]: Running pg_dump on the database.
+[2017-12-07 05:47:29]: Mounting the 192.168.69.5 folder
+[2017-12-07 05:47:29]: Unable to copy file to remote location. Exception: not enough values to unpack (expected 2, got 1)
+[2017-12-07 05:47:29]: Running command: 'fusermount -u -z /home/draik/backup-mnt-point'
+[2017-12-07 05:48:12]: Running vacuum on the database.
+[2017-12-07 05:48:12]: Running pg_dump on the database.
+[2017-12-07 05:48:12]: Mounting the 192.168.69.5 folder
+[2017-12-07 05:48:12]: Unable to copy file to remote location. Exception: not enough values to unpack (expected 2, got 1)
+[2017-12-07 05:48:12]: Running command: 'fusermount -u -z /home/draik/backup-mnt-point'
+[2017-12-07 05:50:04]: Running vacuum on the database.
+[2017-12-07 05:50:04]: Running pg_dump on the database.
+[2017-12-07 05:50:04]: Mounting the 192.168.69.5 folder
+[2017-12-07 05:50:04]: Unable to copy file to remote location. Exception: not enough values to unpack (expected 2, got 1)
+[2017-12-07 05:50:04]: Running command: 'fusermount -u -z /home/draik/backup-mnt-point'
+[2017-12-07 05:50:36]: Running vacuum on the database.
+[2017-12-07 05:50:36]: Running pg_dump on the database.
+[2017-12-07 05:50:36]: Backup and Vacuum complete for database 'chlen'
+[2017-12-07 05:50:36]: Mounting the 192.168.69.5 folder
+[2017-12-07 05:50:36]: Unable to copy file to remote location. Exception: not enough values to unpack (expected 2, got 1)
+[2017-12-07 05:50:36]: Running command: 'fusermount -u -z /home/draik/backup-mnt-point'
+[2017-12-07 05:51:44]: Running vacuum on the database.
+[2017-12-07 05:51:44]: Running pg_dump on the database.
+[2017-12-07 05:51:44]: Backup and Vacuum complete for database 'chlen'
+[2017-12-07 05:51:44]: Mounting the 192.168.69.5 folder
+[2017-12-07 05:51:44]: Unable to copy file to remote location. Exception: not enough values to unpack (expected 2, got 1)
+[2017-12-07 05:51:44]: Running command: 'fusermount -u -z /home/draik/backup-mnt-point'
+[2017-12-07 05:52:49]: Running vacuum on the database.
+[2017-12-07 05:52:49]: Running pg_dump on the database.
+[2017-12-07 05:52:49]: Backup and Vacuum complete for database 'chlen'
+[2017-12-07 05:52:49]: Mounting the 192.168.69.5 folder
+[2017-12-07 05:52:49]: Unable to copy file to remote location. Exception: not enough values to unpack (expected 2, got 1)
+[2017-12-07 05:52:49]: Running command: 'fusermount -u -z /home/draik/backup-mnt-point'
+[2017-12-07 05:53:24]: Running vacuum on the database.
+[2017-12-07 05:53:24]: Running pg_dump on the database.
+[2017-12-07 05:53:24]: Backup and Vacuum complete for database 'chlen'
+[2017-12-07 05:53:24]: Mounting the 192.168.69.5 folder
+[2017-12-07 05:53:24]: Unable to copy file to remote location. Exception: not enough values to unpack (expected 2, got 1)
+[2017-12-07 05:53:24]: Running command: 'fusermount -u -z /home/draik/backup-mnt-point'
+[2017-12-07 05:55:13]: Running vacuum on the database. Cmd: ['/usr/bin/vacuumdb', '-h', 'localhost', '-U', 'postgres', '-d', 'chlen']
+[2017-12-07 05:55:13]: Running pg_dump on the database. Cmd: ['/usr/bin/pg_dump', '-h', 'localhost', '-U', 'postgres', '-f', '/tmp/test/chlen-database-201712070555.backup', '-Fc', 'chlen', '--no-owner']
+[2017-12-07 05:55:13]: Backup and Vacuum complete for database 'chlen'
+[2017-12-07 05:55:13]: Mounting the 192.168.69.5 folder
+[2017-12-07 05:55:13]: Unable to copy file to remote location. Exception: not enough values to unpack (expected 2, got 1)
+[2017-12-07 05:55:13]: Running command: 'fusermount -u -z /home/draik/backup-mnt-point'
+[2017-12-07 06:00:55]: Running vacuum on the database. Cmd: ['/usr/bin/vacuumdb', '-h', 'localhost', '-U', 'postgres', '-d', 'chlen']
+[2017-12-07 06:00:55]: Running pg_dump on the database. Cmd: ['/usr/bin/pg_dump', '-h', 'localhost', '-U', 'postgres', '-f', '/tmp/test/chlen-database-201712070600.backup', '-Fc', 'chlen', '--no-owner']
+[2017-12-07 06:00:55]: Backup and Vacuum complete for database 'chlen'
+[2017-12-07 06:00:55]: Mounting the 22 folder
+[2017-12-07 06:00:55]: Unable to copy file to remote location. Exception: not enough values to unpack (expected 2, got 1)
+[2017-12-07 06:00:55]: Running command: 'fusermount -u -z /home/draik/backup-mnt-point'
+[2017-12-07 06:01:10]: Running vacuum on the database. Cmd: ['/usr/bin/vacuumdb', '-h', 'localhost', '-U', 'postgres', '-d', 'chlen']
+[2017-12-07 06:01:11]: Running pg_dump on the database. Cmd: ['/usr/bin/pg_dump', '-h', 'localhost', '-U', 'postgres', '-f', '/tmp/test/chlen-database-201712070601.backup', '-Fc', 'chlen', '--no-owner']
+[2017-12-07 06:01:11]: Backup and Vacuum complete for database 'chlen'
+[2017-12-07 06:01:11]: Mounting the 22 folder
+[2017-12-07 06:01:11]: Running command: 'sshfs draik -p /home/test_user/testdir@192.168.69.5:22 /home/draik/backup-mnt-point -o IdentityFile=/home/draik/.ssh/id_rsa'
+[2017-12-07 06:01:11]: Unable to copy file to remote location. Exception: Can't mount remote FS
+[2017-12-07 06:01:11]: Running command: 'fusermount -u -z /home/draik/backup-mnt-point'
+[2017-12-07 06:01:45]: Running vacuum on the database. Cmd: ['/usr/bin/vacuumdb', '-h', 'localhost', '-U', 'postgres', '-d', 'chlen']
+[2017-12-07 06:01:45]: Running pg_dump on the database. Cmd: ['/usr/bin/pg_dump', '-h', 'localhost', '-U', 'postgres', '-f', '/tmp/test/chlen-database-201712070601.backup', '-Fc', 'chlen', '--no-owner']
+[2017-12-07 06:01:45]: Backup and Vacuum complete for database 'chlen'
+[2017-12-07 06:01:45]: Mounting the 22 folder
+[2017-12-07 06:01:45]: Running command: 'sshfs -p /home/test_user/testdir draik@192.168.69.5:22 /home/draik/backup-mnt-point -o IdentityFile=/home/draik/.ssh/id_rsa'
+[2017-12-07 06:01:45]: Unable to copy file to remote location. Exception: Can't mount remote FS
+[2017-12-07 06:01:45]: Running command: 'fusermount -u -z /home/draik/backup-mnt-point'
+[2017-12-07 06:13:39]: Running vacuum on the database. Cmd: ['/usr/bin/vacuumdb', '-h', 'localhost', '-U', 'postgres', '-d', 'chlen']
+[2017-12-07 06:13:39]: Running pg_dump on the database. Cmd: ['/usr/bin/pg_dump', '-h', 'localhost', '-U', 'postgres', '-f', '/tmp/test/chlen-database-201712070613.backup', '-Fc', 'chlen', '--no-owner']
+[2017-12-07 06:13:39]: Backup and Vacuum complete for database 'chlen'
+[2017-12-07 06:13:39]: Mounting the None folder
+[2017-12-07 06:13:39]: Unable to copy file to remote location. Exception: must be str, not NoneType
+[2017-12-07 06:13:39]: Running command: 'fusermount -u -z /home/draik/backup-mnt-point'
+[2017-12-07 06:15:51]: Running vacuum on the database. Cmd: ['/usr/bin/vacuumdb', '-h', 'localhost', '-U', 'postgres', '-d', 'chlen']
+[2017-12-07 06:15:51]: Running pg_dump on the database. Cmd: ['/usr/bin/pg_dump', '-h', 'localhost', '-U', 'postgres', '-f', '/tmp/test/chlen-database-201712070615.backup', '-Fc', 'chlen', '--no-owner']
+[2017-12-07 06:15:51]: Backup and Vacuum complete for database 'chlen'
+[2017-12-07 06:15:51]: Mounting the None folder
+[2017-12-07 06:15:51]: Unable to copy file to remote location. Exception: must be str, not int
+[2017-12-07 06:15:51]: Running command: 'fusermount -u -z /home/draik/backup-mnt-point'
+[2017-12-07 06:16:07]: Running vacuum on the database. Cmd: ['/usr/bin/vacuumdb', '-h', 'localhost', '-U', 'postgres', '-d', 'chlen']
+[2017-12-07 06:16:07]: Running pg_dump on the database. Cmd: ['/usr/bin/pg_dump', '-h', 'localhost', '-U', 'postgres', '-f', '/tmp/test/chlen-database-201712070616.backup', '-Fc', 'chlen', '--no-owner']
+[2017-12-07 06:16:07]: Backup and Vacuum complete for database 'chlen'
+[2017-12-07 06:16:07]: Mounting the None folder
+[2017-12-07 06:16:07]: Unable to copy file to remote location. Exception: must be str, not int
+[2017-12-07 06:16:07]: Running command: 'fusermount -u -z /home/draik/backup-mnt-point'
+[2017-12-07 06:16:31]: Running vacuum on the database. Cmd: ['/usr/bin/vacuumdb', '-h', 'localhost', '-U', 'postgres', '-d', 'chlen']
+[2017-12-07 06:16:31]: Running pg_dump on the database. Cmd: ['/usr/bin/pg_dump', '-h', 'localhost', '-U', 'postgres', '-f', '/tmp/test/chlen-database-201712070616.backup', '-Fc', 'chlen', '--no-owner']
+[2017-12-07 06:16:31]: Backup and Vacuum complete for database 'chlen'
+[2017-12-07 06:16:31]: Mounting the None folder
+[2017-12-07 06:16:31]: Running command: 'sshfs -p 22 ('draik',)@localhost:None /home/draik/backup-mnt-point -o IdentityFile=/home/draik/.ssh/id_rsa'
+[2017-12-07 06:16:31]: Unable to copy file to remote location. Exception: Can't mount remote FS
+[2017-12-07 06:16:31]: Running command: 'fusermount -u -z /home/draik/backup-mnt-point'
+[2017-12-07 06:18:49]: Running vacuum on the database. Cmd: ['/usr/bin/vacuumdb', '-h', 'localhost', '-U', 'postgres', '-d', 'chlen']
+[2017-12-07 06:18:49]: Running pg_dump on the database. Cmd: ['/usr/bin/pg_dump', '-h', 'localhost', '-U', 'postgres', '-f', '/tmp/test/chlen-database-201712070618.backup', '-Fc', 'chlen', '--no-owner']
+[2017-12-07 06:18:49]: Backup and Vacuum complete for database 'chlen'
+[2017-12-07 06:18:49]: Mounting the None folder
+[2017-12-07 06:18:49]: Running command: 'sshfs -p 22 ('draik',)@localhost:None /home/draik/backup-mnt-point -o IdentityFile=/home/draik/.ssh/id_rsa'
+[2017-12-07 06:18:56]: Running command: 'fusermount -u -z /home/draik/backup-mnt-point'
+[2017-12-07 06:20:04]: Running vacuum on the database. Cmd: ['/usr/bin/vacuumdb', '-h', 'localhost', '-U', 'postgres', '-d', 'chlen']
+[2017-12-07 06:20:04]: Running pg_dump on the database. Cmd: ['/usr/bin/pg_dump', '-h', 'localhost', '-U', 'postgres', '-f', '/tmp/test/chlen-database-201712070620.backup', '-Fc', 'chlen', '--no-owner']
+[2017-12-07 06:20:04]: Backup and Vacuum complete for database 'chlen'
+[2017-12-07 06:20:04]: Mounting the None folder
+[2017-12-07 06:20:04]: Running command: 'sshfs -p 22 ('draik',)@localhost:None /home/draik/backup-mnt-point  -o StrictHostKeyChecking=no -o IdentityFile=/home/draik/.ssh/id_rsa'
+[2017-12-07 06:20:04]: Unable to copy file to remote location. Exception: Can't mount remote FS
+[2017-12-07 06:20:04]: Running command: 'fusermount -u -z /home/draik/backup-mnt-point'
+[2017-12-07 06:20:43]: Running vacuum on the database. Cmd: ['/usr/bin/vacuumdb', '-h', 'localhost', '-U', 'postgres', '-d', 'chlen']
+[2017-12-07 06:20:43]: Running pg_dump on the database. Cmd: ['/usr/bin/pg_dump', '-h', 'localhost', '-U', 'postgres', '-f', '/tmp/test/chlen-database-201712070620.backup', '-Fc', 'chlen', '--no-owner']
+[2017-12-07 06:20:43]: Backup and Vacuum complete for database 'chlen'
+[2017-12-07 06:20:43]: Mounting the None folder
+[2017-12-07 06:20:43]: Running command: 'sshfs -p 22 ('draik',)@localhost:None /home/draik/backup-mnt-point -o IdentityFile=/home/draik/.ssh/id_rsa,StrictHostKeyChecking=no'
+[2017-12-07 06:21:12]: Running command: 'fusermount -u -z /home/draik/backup-mnt-point'
+[2017-12-07 06:22:22]: Running vacuum on the database. Cmd: ['/usr/bin/vacuumdb', '-h', 'localhost', '-U', 'postgres', '-d', 'chlen']
+[2017-12-07 06:22:22]: Running pg_dump on the database. Cmd: ['/usr/bin/pg_dump', '-h', 'localhost', '-U', 'postgres', '-f', '/tmp/test/chlen-database-201712070622.backup', '-Fc', 'chlen', '--no-owner']
+[2017-12-07 06:22:22]: Backup and Vacuum complete for database 'chlen'
+[2017-12-07 06:22:22]: Mounting the None folder
+[2017-12-07 06:22:22]: Running command: 'sshfs -p 22 ('draik',)@localhost:None /home/draik/backup-mnt-point -o IdentityFile=/home/draik/.ssh/id_rsa,StrictHostKeyChecking=no'
+[2017-12-07 06:22:47]: Running command: 'fusermount -u -z /home/draik/backup-mnt-point'
+[2017-12-07 06:22:48]: Running vacuum on the database. Cmd: ['/usr/bin/vacuumdb', '-h', 'localhost', '-U', 'postgres', '-d', 'chlen']
+[2017-12-07 06:22:48]: Running pg_dump on the database. Cmd: ['/usr/bin/pg_dump', '-h', 'localhost', '-U', 'postgres', '-f', '/tmp/test/chlen-database-201712070622.backup', '-Fc', 'chlen', '--no-owner']
+[2017-12-07 06:22:48]: Backup and Vacuum complete for database 'chlen'
+[2017-12-07 06:22:48]: Mounting the None folder
+[2017-12-07 06:22:48]: Running command: 'sshfs -p 22 ('d',)@localhost:None /home/draik/backup-mnt-point -o IdentityFile=/home/draik/.ssh/id_rsa,StrictHostKeyChecking=no'
+[2017-12-07 06:22:52]: Running command: 'fusermount -u -z /home/draik/backup-mnt-point'
+[2017-12-07 06:24:43]: Running vacuum on the database. Cmd: ['/usr/bin/vacuumdb', '-h', 'localhost', '-U', 'postgres', '-d', 'chlen']
+[2017-12-07 06:24:43]: Running pg_dump on the database. Cmd: ['/usr/bin/pg_dump', '-h', 'localhost', '-U', 'postgres', '-f', '/tmp/test/chlen-database-201712070624.backup', '-Fc', 'chlen', '--no-owner']
+[2017-12-07 06:24:44]: Backup and Vacuum complete for database 'chlen'
+[2017-12-07 06:24:44]: Mounting the None folder
+[2017-12-07 06:24:44]: Running command: 'sshfs -p 22 ('draik',)@localhost:None /home/draik/backup-mnt-point -o IdentityFile=/home/draik/.ssh/id_rsa,StrictHostKeyChecking=no'
+[2017-12-07 06:24:54]: Running command: 'fusermount -u -z /home/draik/backup-mnt-point'
+[2017-12-07 06:24:56]: Running vacuum on the database. Cmd: ['/usr/bin/vacuumdb', '-h', 'localhost', '-U', 'postgres', '-d', 'chlen']
+[2017-12-07 06:24:56]: Running pg_dump on the database. Cmd: ['/usr/bin/pg_dump', '-h', 'localhost', '-U', 'postgres', '-f', '/tmp/test/chlen-database-201712070624.backup', '-Fc', 'chlen', '--no-owner']
+[2017-12-07 06:24:56]: Backup and Vacuum complete for database 'chlen'
+[2017-12-07 06:24:56]: Mounting the None folder
+[2017-12-07 06:24:56]: Running command: 'sshfs -p 22 ('draik',)@localhost:None /home/draik/backup-mnt-point -o IdentityFile=/home/draik/.ssh/id_rsa,StrictHostKeyChecking=no'
+[2017-12-07 06:25:16]: Running command: 'fusermount -u -z /home/draik/backup-mnt-point'
+[2017-12-07 06:25:18]: Running vacuum on the database. Cmd: ['/usr/bin/vacuumdb', '-h', 'localhost', '-U', 'postgres', '-d', 'chlen']
+[2017-12-07 06:25:18]: Running pg_dump on the database. Cmd: ['/usr/bin/pg_dump', '-h', 'localhost', '-U', 'postgres', '-f', '/tmp/test/chlen-database-201712070625.backup', '-Fc', 'chlen', '--no-owner']
+[2017-12-07 06:25:18]: Backup and Vacuum complete for database 'chlen'
+[2017-12-07 06:25:18]: Mounting the None folder
+[2017-12-07 06:25:18]: Running command: 'sshfs -p 22 draik@localhost:None /home/draik/backup-mnt-point -o IdentityFile=/home/draik/.ssh/id_rsa,StrictHostKeyChecking=no'
+[2017-12-07 06:25:24]: Running command: 'fusermount -u -z /home/draik/backup-mnt-point'
+[2017-12-07 06:27:03]: Running vacuum on the database. Cmd: ['/usr/bin/vacuumdb', '-h', 'localhost', '-U', 'postgres', '-d', 'chlen']
+[2017-12-07 06:27:03]: Running pg_dump on the database. Cmd: ['/usr/bin/pg_dump', '-h', 'localhost', '-U', 'postgres', '-f', '/tmp/test/chlen-database-201712070627.backup', '-Fc', 'chlen', '--no-owner']
+[2017-12-07 06:27:04]: Backup and Vacuum complete for database 'chlen'
+[2017-12-07 06:27:04]: Mounting the None folder
+[2017-12-07 06:27:04]: Running command: 'sshfs -p 22 draik@localhost:None /home/draik/backup-mnt-point -o IdentityFile=/home/draik/.ssh/id_rsa,StrictHostKeyChecking=no'
+[2017-12-07 06:28:50]: Running command: 'fusermount -u -z /home/draik/backup-mnt-point'
+[2017-12-07 06:28:51]: Running vacuum on the database. Cmd: ['/usr/bin/vacuumdb', '-h', 'localhost', '-U', 'postgres', '-d', 'chlen']
+[2017-12-07 06:28:51]: Running pg_dump on the database. Cmd: ['/usr/bin/pg_dump', '-h', 'localhost', '-U', 'postgres', '-f', '/tmp/test/chlen-database-201712070628.backup', '-Fc', 'chlen', '--no-owner']
+[2017-12-07 06:28:51]: Backup and Vacuum complete for database 'chlen'
+[2017-12-07 06:28:51]: Mounting the None folder
+[2017-12-07 06:28:51]: Running command: 'sshfs -p 22 draik@localhost:None /home/draik/backup-mnt-point -o IdentityFile=/home/draik/.ssh/id_rsa,StrictHostKeyChecking=no'
+[2017-12-07 06:29:23]: Running command: 'fusermount -u -z /home/draik/backup-mnt-point'
+[2017-12-07 06:29:50]: Running vacuum on the database. Cmd: ['/usr/bin/vacuumdb', '-h', 'localhost', '-U', 'postgres', '-d', 'chlen']
+[2017-12-07 06:29:50]: Running pg_dump on the database. Cmd: ['/usr/bin/pg_dump', '-h', 'localhost', '-U', 'postgres', '-f', '/tmp/test/chlen-database-201712070629.backup', '-Fc', 'chlen', '--no-owner']
+[2017-12-07 06:29:50]: Backup and Vacuum complete for database 'chlen'
+[2017-12-07 06:29:50]: Mounting the /home/draik/testdir folder
+[2017-12-07 06:29:50]: Running command: 'sshfs -p 22 draik@192.168.69.5:/home/draik/testdir /home/draik/backup-mnt-point -o IdentityFile=/home/draik/.ssh/id_rsa,StrictHostKeyChecking=no'
+[2017-12-07 06:29:51]: Unable to copy file to remote location. Exception: Can't mount remote FS
+[2017-12-07 06:29:51]: Running command: 'fusermount -u -z /home/draik/backup-mnt-point'
+[2017-12-07 06:30:23]: Running vacuum on the database. Cmd: ['/usr/bin/vacuumdb', '-h', 'localhost', '-U', 'postgres', '-d', 'chlen']
+[2017-12-07 06:30:23]: Running pg_dump on the database. Cmd: ['/usr/bin/pg_dump', '-h', 'localhost', '-U', 'postgres', '-f', '/tmp/test/chlen-database-201712070630.backup', '-Fc', 'chlen', '--no-owner']
+[2017-12-07 06:30:23]: Backup and Vacuum complete for database 'chlen'
+[2017-12-07 06:30:23]: Mounting the  folder
+[2017-12-07 06:30:23]: Running command: 'sshfs -p 22 draik@192.168.69.5: /home/draik/backup-mnt-point -o IdentityFile=/home/draik/.ssh/id_rsa,StrictHostKeyChecking=no'
+[2017-12-07 06:30:23]: Running command: 'fusermount -u -z /home/draik/backup-mnt-point'

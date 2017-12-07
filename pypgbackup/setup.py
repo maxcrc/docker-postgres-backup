@@ -7,5 +7,5 @@ setup(name='pypgbackup',
       description='PostgresSQL backup tool',
       author='Baiev Yevhen',
       author_email='thedraik@gmail.com',
-      packages=['pypgbackup'],
+      packages=['pypgbackup','pypgbackup.filedeleter', 'pypgbackup.uploaders'],
      )

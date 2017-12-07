@@ -1,9 +1,8 @@
 import logging
 from os import path
-from utils import send_mail
+from utils import send_mail, setup_logging
 from uploaders import UploaderFuse, UploaderScp, UploaderSshFs
 from backuper import Backuper
-from utils import LOG_FILE, log, setup_logging
 from filedeleter import filedeleter
 import configparser
 
