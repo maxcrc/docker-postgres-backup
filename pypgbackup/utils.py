@@ -4,17 +4,16 @@ from datetime import datetime
 from dateutils import relativedelta
 from os import path, remove, listdir
 import smtplib
+import configparser
 
 LOGGER_NAME = "Backup"
-LOG_FILE = "backup.log"
 
 log = logging.getLogger(LOGGER_NAME)
 logging.getLogger("paramiko").setLevel(logging.WARNING)
 
-
-def setup_logging():
+def setup_logging(log_file_path):
     logging.basicConfig(
-        filename=LOG_FILE,
+        filename=log_file_path,
         level=logging.DEBUG,
         format='[%(asctime)s]: %(message)s',
         datefmt='%Y-%m-%d %H:%M:%S'

@@ -4,10 +4,16 @@ from utils import send_mail
 from uploaders import UploaderFuse, UploaderScp, UploaderSshFs
 from backuper import Backuper
 from utils import LOG_FILE, log, setup_logging
+from filedeleter import filedeleter
+import configparser
 
-def worker(backuper, uploader=None, cleaner=None, mail_recipients=None):
+def worker(backuper, configuration, uploader=None):
     lines_start = 0
     message = ""
+    mail_recipients = configuration["Mail"].get("Recipients", None)
+    delete_files = configuration["FileDeleter"].getbool("DeleteFiles", False)
+    deleter_expr = configuration["FileDeleter"].get("Expr", None)
+    
     if mail_recipients:
         with open(LOG_FILE) as logfile:
             lines_start = sum(1 for line in logfile)
@@ -17,9 +23,8 @@ def worker(backuper, uploader=None, cleaner=None, mail_recipients=None):
     if uploader:
         uploader.upload(result_path)
 
-    if cleaner:
-        cleaner.clean(path.dirname(result_path))
-
+    if delete_files:
+        filedeleter.delete(deleter_expr, path.dirname(result_path), False)
 
     if not mail_recipients:
         return
@@ -29,20 +34,25 @@ def worker(backuper, uploader=None, cleaner=None, mail_recipients=None):
         message += lines[lines_start:]
         send_mail(mail_recipients, message)
 
-
 def main():
-    setup_logging();
+    cnf = configparser.ConfigParser()
+    cnf.read_file("./config.ini")
+    gencnf = cnf["General"]
+    setup_logging(gencnf["Log"]);
+
+    dbnames = [ x for x in cnf.sections() if x.startswith("db-")]
     
-    worker(
-        Backuper('dortmund', '/var/lib/postgresql/data/backup'),
-        UploaderScp('/home/odoo/backups', 'odoo', 'superfly.maxcrc.de', 6666, "dortmund.dump")
-    )
+    for db in dbnames:
+        uploader_name = cnf[db].get("Uploader")
+        uploader = getattr(globals(), uploader_name)
+        uploader_args = cnf[db].get("UploaderArgs").split(',')
+        backup_destination_folder = cnf[db].get("BackupDestenationFolder", '/var/lib/postgresql/data/backup')
+        
+        worker(
+            Backuper(db.remove('db-'), backup_destination_folder),
+            cnf,
+            uploader(*uploader_args)
+        )
 
-    worker(
-        Backuper('duisburg','/var/lib/postgresql/data/backup'),
-        UploaderScp('/home/odoo/backups', 'odoo', 'superfly.maxcrc.de', 6666, "duisburg.dump")
-    )
-
-
-if __name__ == '__main__':
+if __name__ == '__main__':    
     main()

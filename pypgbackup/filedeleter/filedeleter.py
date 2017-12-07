@@ -9,28 +9,33 @@ import sys
 from glob import glob
 
 
-def _shoulddeletefile(filepath, expr):
-    now = datetime.now()
-    mtime = datetime.fromtimestamp(path.getmtime(filepath))
-    monthend = monthrange(mtime.year, mtime.month)[1]
+class FileDeleter:
+    def __init__(self, filepath, expr):
+        self._expr = expr
+        self._path = filepath
+    
+    def _shoulddeletefile(self, filepath):
+        now = datetime.now()
+        mtime = datetime.fromtimestamp(path.getmtime(filepath))
+        monthend = monthrange(mtime.year, mtime.month)[1]
 
-    todelete = eval(expr, {'__builtins__': {}, 'datetime': datetime, 'timedelta': timedelta }, {'now': now, 'mtime': mtime, 'monthend': monthend})
+        todelete = eval(self._expr, {'__builtins__': {}, 'datetime': datetime, 'timedelta': timedelta }, {'now': now, 'mtime': mtime, 'monthend': monthend})
 
-    logging.debug('expr: "{}" filepath: "{}", mtime: "{}", monthend: "{}", todelete: {}.'.format(expr, filepath, mtime, monthend, todelete))
+        logging.debug('expr: "{}" filepath: "{}", mtime: "{}", monthend: "{}", todelete: {}.'.format(self._expr, filepath, mtime, monthend, todelete))
 
-    return todelete
+        return todelete
 
-def _removefiles(filestodelete, dryrun=False):
-    for filepath in filestodelete:
-        if not dryrun:
-            remove(filepath)
+    def _removefiles(self, filestodelete, dryrun=False):
+        for filepath in filestodelete:
+            if not dryrun:
+                remove(filepath)
 
-def delete(expr, filePath, dryrun):
-    files = [ path.join(filePath, x) for x in glob(filePath) ]
-    _removefiles(
-        [ x for x in files if path.isfile(x) and _shoulddeletefile(x, expr) ],
-        dryrun
-    )
+    def delete(self, dryrun=False):
+        files = [ path.join(self._path, x) for x in glob(self._path) ]
+        self._removefiles(
+            [ x for x in files if path.isfile(x) and self._shoulddeletefile(x) ],
+            dryrun
+        )
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Delete all files leaving based on the expression. glob patterns allowed')
@@ -58,5 +63,5 @@ if __name__ == '__main__':
 
     if args.dryrun:
         logging.debug("Dry run won't delete anything")
-
-    delete(args.expr, args.path, args.dryrun)
+        
+    FileDeleter(args.path, args.expr).delete(args.dryrun)

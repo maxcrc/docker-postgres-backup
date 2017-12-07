@@ -28,13 +28,17 @@ class UploaderScp(UploaderFuse):
         if self._client:
             self._client.close()
 
-    def upload(self):
+    def upload(self, after_copy=None):
         try:
             log.info('Uploading backup on {}:{}'.format(self._hostname, self._port))
             if self._dest_file_name:
                 dest = path.join(path.dirname(self._dest), self._dest_file_name)
 
             self._client.open_sftp().put(self._src, dest)
+
+            if callable(after_copy):
+                after_copy(self)
+
         except Exception as e:
             log.error('Upload failed. Exception: {}'.format(e))
         finally:

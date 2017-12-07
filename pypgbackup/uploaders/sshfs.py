@@ -15,7 +15,7 @@ class UploaderSshFs(UploaderFuse):
         (output, err) = process.communicate()
         return process.wait(), output, err
 
-    def upload(self):
+    def upload(self, after_copy=None):
         log.info("Mounting the {} folder".format(self._dest))
         try:
             name_host, file_path = self._dest.split(':')
@@ -29,8 +29,12 @@ class UploaderSshFs(UploaderFuse):
 
             if c != 0:
                 raise RuntimeError('Can\'t mount remote FS')
-
+            
             shutil.copy2(self._src, path.join(self._mount_point, filename))
+
+            if callable(after_copy):
+                after_copy(self)
+
         except Exception as e:
             log.warning('Unable to copy file to remote location. Exception: {}'.format(e))
             raise

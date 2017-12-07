@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DATE=$(date +%Y%m%d%H%M)
+FDATE=$(date +%Y%m%d%H%M)
 FILE_NAME="${PG_DATABASE}-database-${DATE}.backup"
 PG_BACKUP_FOLDER="/var/lib/postgresql/data/backups"
 
